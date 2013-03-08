@@ -1,0 +1,69 @@
+canvas{
+    display:block;
+}
+.text-center{
+    text-align:center;
+}
+.jumboDiv{
+    overflow:hidden;
+}
+@media (max-width: 767px) and (orientation: landscape){
+    .graph{
+        height:80%;
+    }
+
+}
+@media (max-width: 767px) and (orientation: portrait){
+    .graph{
+        height:60%;
+    }
+
+
+}
+@media (max-width: 767px){
+    .graph{
+        height:60%;
+    }
+
+}
+
+@media (min-width:768px){
+    .graph{
+        height:400px;
+    }
+}
+@media (max-width:999px){
+    .jumboImg{
+        max-width: 120%;
+        margin-top:-15%;
+        margin-bottom:-24%;
+        margin-right:-100px;
+        margin-left:-100px;
+        overflow:hidden;
+    }
+}
+@media (min-width:1000px){
+    .jumboImg{
+        max-width: 120%;
+        margin-right:-100px;
+        margin-left:-100px;
+        margin-top:-150px;
+        margin-bottom:-225px;
+        overflow:hidden;
+    }
+}
+
+.spinner {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    margin-left: auto; /* half width of the spinner gif */
+    margin-right: auto;
+    margin-top: auto; /* half height of the spinner gif */
+    margin-bottom: auto; /* half height of the spinner gif */
+    text-align:center;
+    z-index:1234;
+    overflow: auto;
+    width: 100px; /* width of the spinner gif */
+    height: 102px; /*hight of the spinner gif +2px to fix IE8 issue */
+}
