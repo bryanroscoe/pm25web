@@ -42,7 +42,7 @@ def getFile(req, lat, long, year):
         if monthly:
             scriptOne.scriptOne( ['script name', lat, long, filename,'-s', '2003-01-01', '-e', year + '-12-12', '-m'])
         else:
-            scriptOne.scriptOne( ['script name', lat, long, filename,'-s', year + '-01-01', '-e', year + '-12-12'])
+            scriptOne.scriptOne( ['script name', lat, long, filename,'-s', year + '-01-01', '-e', year + '-12-12', '-m'])
 
     #open('output.csv', 'w')
     req.content_type = 'text/javascript'

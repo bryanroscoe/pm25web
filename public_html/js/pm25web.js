@@ -1,7 +1,40 @@
+
+var g = null;
+var screen;
 $('#graph').css('margin-left', '-20px');
 //$('#graph').css('display', 'block');
 
 
+function resizeGraph(){
+
+    if($(window).width() < 768)
+    {
+        if($(window).width() < $(window).height() )
+        {
+    console.log("testing")
+            g.updateOptions({
+                    //xAxisLabelWidth: 30,
+                    //pixelsPerLabel: 30,
+                        xLabelWidth: 30,
+                        pixelsPerLabel: 30,
+                        //title: "PM 2.5",
+                        //axisLabelWidth:20
+                    })
+        }
+        else
+        {
+        }
+    }
+    else
+    {
+            g.updateOptions({
+                        xLabelWidth: 60,
+                        title: "",
+                        pixelsPerLabel: 60
+                    })
+    }
+
+}
 
 function resizeCss(){
     //$('#titleImg').css('margin-top', ($('#titleImg').width()/1200)*(-150));
@@ -22,7 +55,23 @@ function resizeCss(){
     {
         $('#graph').css('height', '400');
     }
+
 }
+    if($(window).width() < 700)
+    {
+        if($(window).width() < $(window).height() )
+        {
+            screen = "portrait"
+        }
+        else
+        {
+            screenType = "landscape"
+        }
+    }
+    else
+    {
+        screenType = "desktop"
+    }
 
 $(window).on('resize', resizeCss);
 resizeCss();
@@ -53,8 +102,24 @@ year = ($.urlParam("Year") != '' ? $.urlParam("Year") : 'All')
 
 if(year != 'All')
 {
+    $('#chooseYear').val(year);
+}
+$('#chooseYear').change(function() {
+    if($(this).val() == "All Years")
+    {
+        window.location.href="?Year=All";
+    }
+    else
+    {
+        window.location.href="?Year="+$('#chooseYear').val();
+    }
+});
+/*
+if(year != 'All')
+{
     $('#chooseYear').html(year + '<span class="caret"></span>');
 }
+*/
 function activateModal(buttons)
 {
     buttons += '<button class="btn btn-success" data-dismiss="modal" aria-hidden="true">Close</button>'
@@ -70,6 +135,7 @@ pm25data = null;
 
 function showPosition(city, state, latitude, longitude)
 {
+    /* Old code for showing map
     var mapSize = 425
     if($(window).width() < 425)
     {
@@ -83,6 +149,9 @@ function showPosition(city, state, latitude, longitude)
         str += (longitude-.1) + ',' + (latitude-.1) +',' + (longitude+.1) + ',' + (latitude+.1)
         str+='&amp;layer=mapquest&amp;marker=' + latitude +',' + longitude + '" style="border: 1px solid black"></iframe>'
         $("#location").html(str);   
+    */
+
+
     $.ajax({
         url: "/cgi-bin/csvCreate.py/getFile?lat=" + latitude.toFixed(1) + "&long=" + longitude.toFixed(1) +"&year=" + year,
         //url: "http://www.hashemian.com/tools/form-post-tester.php/lary",
@@ -98,6 +167,7 @@ function showPosition(city, state, latitude, longitude)
         },
         success: function(data){
             
+            
             g = new Dygraph(
                 document.getElementById("graph"),
                 data,
@@ -109,14 +179,29 @@ function showPosition(city, state, latitude, longitude)
                     hideOverlayOnMouseOut: false,
                     fillGraph: true,
                     colors: ['blue'],
+                    //gets rid of extra white space
                     yAxisLabelWidth: 20,
-                    axisLabelWidth:20
+
+                    xAxisLabelWidth: 30,
+                    pixelsPerLabel: 30,
+                    //axisLabelWidth:30,
+                    /*
+                    axes:{
+                        x:{
+                            axisLabelFormatter: function(di, gran, opts, g) {
+                                return  d.strftime('%Y') ;
+                            }
+                        }
+                    }*/
+
 
 
 
                 }
             );
             
+            $(window).on('resize', resizeGraph);
+            resizeGraph();
         }   
     });
 }
